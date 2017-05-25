@@ -11,9 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/','LocationController@locateMyBus');
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 

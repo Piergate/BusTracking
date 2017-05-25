@@ -10,10 +10,10 @@ class LocationController extends Controller
     //
     public function locateMyBus()
     {
-    	
+
     	Mapper::map(53.381128999999990000, -1.470085000000040000);
     	// Mapper::map($longitude, $latitude);
 
-    	return view('location.bus');
+    	return view('welcome');
     }
 }
