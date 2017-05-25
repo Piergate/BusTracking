@@ -12,11 +12,11 @@ class LocationController extends Controller
     {
 
     	// Mapper::map(53.381128999999990000, -1.470085000000040000);
-    	// $ip = geoip()->getClientIP();
+    	$ip = geoip()->getClientIP();
 
-    	// $location = geoip($ip);
+    	$location = geoip($ip);
     	// return [$location->lat, $location->lon];
-    	// Mapper::map($location->lat, $location->lon);
+    	Mapper::map($location->lat, $location->lon);
 
     	return view('welcome');
     }
