@@ -16,7 +16,7 @@ class LocationController extends Controller
 
     	$location = geoip($ip);
     	// return [$location->lat, $location->lon];
-    	Mapper::map($location->lon, $location->lat);
+    	Mapper::map($location->lat, $location->lon);
 
     	return view('welcome');
     }
