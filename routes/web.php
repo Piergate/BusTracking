@@ -12,20 +12,27 @@
 */
 
 
-Route::get('/','LocationController@locateMyBus');
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['middleware' => ['web','auth']], function (){ 
+Route::group(['middleware' => ['web','auth','role:Admin']], function (){ 
 
 	Route::resource('/lines', 'LineController');
 	Route::resource('/buses', 'BusController');
-	Route::get('/locatemybus', 'LocationController@locateMyBus');
-
+	Route::resource('/drivers', 'DriverController');
+	Route::resource('/students', 'StudentController');
+	Route::resource('/supervisors', 'SupervisorController');
+	Route::get('/locatemybus','LocationController@locateMyBus');
 });
+
+// Route::group(['middleware' => ['web','auth','role:Parent']], function() { //error
+// 	Route::get('/locatemybus', 'LocationController@locateMyBus');
+// 	Route::resource('/lines', 'LineController', ['only' => ['index']]);
+
+// });

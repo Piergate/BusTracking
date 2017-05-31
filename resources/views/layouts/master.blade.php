@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kumar+One" rel="stylesheet">
 </head>
 <body>
     <div id="app" style="padding-top: 65px;">
@@ -21,7 +22,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    @include('layouts.notifications')
     @stack('js')
-
 </body>
 </html>

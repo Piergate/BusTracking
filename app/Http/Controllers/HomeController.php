@@ -23,9 +23,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return geoip()->getClientIP();
-        $ip = geoip('232.223.11.11');
-        return $ip->lat;
-        // return view('home');
+        // return geoip()->getClientIP();
+        // $ip = geoip('232.223.11.11');
+        // return $ip->lat;
+
+
+        return view('home');
     }
 }

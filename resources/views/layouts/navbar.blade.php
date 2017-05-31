@@ -11,7 +11,7 @@
             </button>
 
             <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{ url('/') }}" style="font-family: 'Kumar One', cursive;">
                 {{ config('app.name', 'Laravel') }}
             </a>
         </div>
@@ -20,11 +20,17 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 @if (Auth::check())
-                    <li><a href="{{ url('/home') }}">Home</a></li>
-                    <li><a href="{{ url('/lines') }}">Lines</a></li>
-                    <li><a href="{{ url('/buses') }}">Buses</a></li>
-                    <li><a href="{{ url('/drivers') }}">Drivers</a></li>
-                    <li><a href="{{ url('/locatemybus') }}">Locate my bus</a></li>
+                    <li><a href="{{ url('/lines') }}"><i class="fa fa-location-arrow"></i> Lines</a></li>
+                    <li><a href="{{ url('/buses') }}"><i class="fa fa-bus"></i> Buses</a></li>
+                    @if(Entrust::hasRole('Admin'))
+                        <li><a href="{{ url('/drivers') }}"><i class="fa fa-drivers-license-o"></i> Drivers</a></li>
+                        <li><a href="{{ url('/supervisors') }}"><i class="fa fa-user-circle-o"></i> Supervisors</a></li>
+                        <li><a href="{{ url('/syudents') }}"><i class="fa fa-users"></i> Students</a></li>
+                        <li><a href=""><i class="fa fa-support"></i> Help</a></li>
+                    @endif
+                    {{--@if(Entrust::hasRole('Parent'))--}}
+                        <li><a href="{{ url('/locatemybus') }}"><i class="fa fa-map-marker"></i> Locate my bus</a></li>
+                    {{--@endif--}}
                 @endif
             </ul>
 
@@ -32,12 +38,12 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @if (Auth::guest())
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                    <li><a href="{{ route('register') }}">Register</a></li>
+                    <li><a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
+                    <li><a href="{{ route('register') }}"><i class="fa fa-arrow-up"></i> Register</a></li>
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                            <i class="fa fa-user"></i> {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
@@ -45,7 +51,7 @@
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                                    Logout
+                                    <i class="fa fa-sign-out"></i> Logout
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

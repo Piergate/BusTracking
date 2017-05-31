@@ -15,6 +15,7 @@ class CreateLinesTable extends Migration
     {
         Schema::create('lines', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name')->unique();
             $table->string('fromRoute');
             $table->string('toRoute');
             $table->text('notes')->nullable();

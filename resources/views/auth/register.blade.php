@@ -42,7 +42,7 @@
                             <label for="phone" class="col-md-4 control-label">phone</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="number" class="form-control" name="phone" value="{{ old('phone') }}" required autofocus>
+                                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required autofocus>
 
                                 @if ($errors->has('phone'))
                                     <span class="help-block">
@@ -71,6 +71,17 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="role" class="col-md-4 control-label">Account type</label>
+                            <div class="col-md-6">
+                                <select name="role" class="form-control" required="required">
+                                    <option value="student">Student</option>
+                                    <option value="driver">Driver</option>
+                                    <option value="supervisor">Supervisor</option>
+                                </select>
                             </div>
                         </div>
 

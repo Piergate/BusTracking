@@ -14,7 +14,14 @@ try {
 } catch (e) {}
 
 // datatables-bs
+window.dt = require('datatables.net-bs');
 // datatables-extensions
+require('datatables.net-select');
+require('datatables.net-fixedheader');
+
+
+//toastr
+window.toastr = require('toastr');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

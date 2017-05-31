@@ -21,7 +21,7 @@ class RolesTableSeeder extends Seeder
         DB::table('roles')->insert([
         	'name' => 'Driver',
         	'display_name' => 'Bus driver',
-        	'description' => 'The guy riding the bus.'
+        	'description' => 'The guy driving the bus.'
         ]);
 
         DB::table('roles')->insert([
