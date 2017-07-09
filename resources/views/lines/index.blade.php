@@ -12,7 +12,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<table class="table table-striped table-hover">
+		<table class="table table-striped table-hover" id="lines-table">
 			<thead>
 				<tr>
 					<th>Name</th>
@@ -46,3 +46,11 @@
 	</div>
 </div>
 @endsection
+
+@push('js')
+	<script>
+		$(document).ready(function () {
+			$('#lines-table').DataTable();
+		});
+	</script>
+@endpush

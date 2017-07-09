@@ -19,7 +19,8 @@ window.dt = require('datatables.net-bs');
 require('datatables.net-select');
 require('datatables.net-fixedheader');
 
-
+//gmaps
+window.GMaps = require('gmaps');
 //toastr
 window.toastr = require('toastr');
 

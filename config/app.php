@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'BusTracking'),
 
     /*
     |--------------------------------------------------------------------------
@@ -168,8 +168,6 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
-        \Torann\GeoIP\GeoIPServiceProvider::class,
-        Cornford\Googlmapper\MapperServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -229,8 +227,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
-        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
-        'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
     ],
 
 ];

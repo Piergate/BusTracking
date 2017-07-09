@@ -21,6 +21,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyCz1s7xqwM6CsqESjN3hQNwLbiB017vOcI"></script> 
     <script src="{{ asset('js/app.js') }}"></script>
     @include('layouts.notifications')
     @stack('js')

@@ -13,4 +13,9 @@ class Line extends Model
     {
     	return $this->hasMany(Bus::class);
     }
+
+    public function waypoints()
+    {
+    	return $this->hasMany(Waypoint::class);
+    }
 }

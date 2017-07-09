@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDistinationsTable extends Migration
+class CreateWaypointsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateDistinationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('distinations', function (Blueprint $table) {
+        Schema::create('waypoints', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unSignedInteger('line_id');
             $table->string('longitude');
             $table->string('latitude');
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateDistinationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('distinations');
+        Schema::dropIfExists('waypoints');
     }
 }

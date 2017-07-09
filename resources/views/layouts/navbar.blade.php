@@ -25,7 +25,7 @@
                     @if(Entrust::hasRole('Admin'))
                         <li><a href="{{ url('/drivers') }}"><i class="fa fa-drivers-license-o"></i> Drivers</a></li>
                         <li><a href="{{ url('/supervisors') }}"><i class="fa fa-user-circle-o"></i> Supervisors</a></li>
-                        <li><a href="{{ url('/syudents') }}"><i class="fa fa-users"></i> Students</a></li>
+                        <li><a href="{{ url('/students') }}"><i class="fa fa-users"></i> Students</a></li>
                         <li><a href=""><i class="fa fa-support"></i> Help</a></li>
                     @endif
                     {{--@if(Entrust::hasRole('Parent'))--}}

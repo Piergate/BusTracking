@@ -10,12 +10,6 @@ class LocationController extends Controller
     //
     public function locateMyBus()
     {
-    	// $ip = geoip()->getClientIP();
-
-    	// $location = geoip($ip);
-    	// return [$location->lat, $location->lon];
-    	// Mapper::map($location->lat, $location->lon);
-
     	return view('location.bus');
     }
 }
