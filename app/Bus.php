@@ -18,11 +18,16 @@ class Bus extends Model
             $builder->withCount('students');
         });
 
+        static::addGlobalScope('supervisorCount', function ($builder)
+        {
+            $builder->withCount('supervisor');
+        });
+
     }
 
-    public function users()
+    public function students()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class)->withRole('student');
     }
     
     public function line()
@@ -30,19 +35,14 @@ class Bus extends Model
         return $this->belongsTo(Line::class);
     }
 
-    public function students()
-    {
-        return $this->users->withRole('student');
-    }
-
     public function supervisor()
     {
-        return $this->users->withRole('supervisor');      
+        return $this->hasMany(User::class)->withRole('supervisor');      
     }
 
     public function driver()
     {
-        return $this->users->withRole('driver');   
+        return $this->hasMany(User::class)->withRole('driver');
     }
 
     public function trips()
