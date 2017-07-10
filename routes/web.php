@@ -32,8 +32,10 @@ Route::group(['middleware' => ['web','auth','role:Admin']], function (){
 	Route::resource('/drivers', 'DriverController');
 	Route::resource('/students', 'StudentController');
 	Route::resource('/supervisors', 'SupervisorController');
-	Route::get('/locatemybus','LocationController@locateMyBus');
+	Route::resource('/trips', 'TripController');
 });
+
+Route::get('/locatemybus','LocationController@locateMyBus');
 
 // Route::group(['middleware' => ['web','auth','role:Parent']], function() { //error
 // 	Route::get('/locatemybus', 'LocationController@locateMyBus');

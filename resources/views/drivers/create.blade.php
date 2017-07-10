@@ -3,12 +3,24 @@
 <div class="container">
 	<form action="{{ url('/buses') }}" method="POST" role="form" class="form-horizontal">
 		{{ csrf_field() }}
-		<legend>Create new bus</legend>
+		<legend>Create new driver</legend>
 	
 		<div class="form-group">
 			<div class="col-md-4 col-sm-4">
 				<label for="name">Name</label>
 				<input type="text" class="form-control" name="name" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-4 col-sm-4">
+				<label for="phone">Phone</label>
+				<input type="text" class="form-control" name="phone" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-4 col-sm-4">
+				<label for="password">Password</label>
+				<input type="text" class="form-control" name="password" required>
 			</div>
 		</div>
 		<div class="form-group">

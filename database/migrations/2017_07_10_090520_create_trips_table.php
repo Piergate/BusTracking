@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWaypointsTable extends Migration
+class CreateTripsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateWaypointsTable extends Migration
      */
     public function up()
     {
-        Schema::create('waypoints', function (Blueprint $table) {
+        Schema::create('trips', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('line_id')->index();
-            $table->string('longitude');
-            $table->string('latitude');
+            $table->unsignedInteger('bus_id')->index();
+            $table->boolean('ended')->default(false);
             $table->timestamps();
             $table->foreign('line_id')->references('id')->on('lines')->onDelete('cascade');
+            $table->foreign('bus_id')->references('id')->on('buses')->onDelete('cascade');
         });
     }
 
@@ -30,6 +31,6 @@ class CreateWaypointsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('waypoints');
+        Schema::dropIfExists('trips');
     }
 }

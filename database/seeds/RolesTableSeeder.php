@@ -31,9 +31,9 @@ class RolesTableSeeder extends Seeder
         ]);
 
         DB::table('roles')->insert([
-        	'name' => 'Parent',
-        	'display_name' => 'parent',
-        	'description' => 'parent and maybe student.'
+        	'name' => 'Student',
+        	'display_name' => 'student',
+        	'description' => 'Student and his parents.'
         ]);
     }
 }

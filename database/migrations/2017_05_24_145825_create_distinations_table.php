@@ -15,10 +15,11 @@ class CreateDistinationsTable extends Migration
     {
         Schema::create('distinations', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->index();
             $table->string('longitude');
             $table->string('latitude');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

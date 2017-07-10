@@ -12,7 +12,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<table class="table table-striped table-hover">
+		<table class="table table-striped table-hover" id="drivers-table">
 			<thead>
 				<tr>
 					<th>No.</th>
@@ -43,3 +43,11 @@
 	</div>
 </div>
 @endsection
+
+@push('js')
+<script>
+	$(document).ready(function () {
+		$('#drivers-table').DataTable();
+	});
+</script>
+@endpush

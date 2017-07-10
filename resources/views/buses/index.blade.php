@@ -12,7 +12,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<table class="table table-striped table-hover">
+		<table class="table table-striped table-hover" id="buses-table" style="width: 100%;">
 			<thead>
 				<tr>
 					<th>Number</th>
@@ -48,3 +48,11 @@
 	</div>
 </div>
 @endsection
+
+@push('js')
+<script>
+	$(document).ready(function () {
+		$('#buses-table').DataTable();
+	});
+</script>
+@endpush

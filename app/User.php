@@ -28,8 +28,21 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function scopeWithRole($query, $role)
+    {
+        return $query->whereHas('roles', function ($query) use ($role)
+        {
+            $query->where('name', $role);
+        });
+    }
+
     public function destinations()
     {
         return $this->hasMany(Destination::class);
+    }
+
+    public function bus()
+    {
+        return $this->belongsTo(Bus::class);
     }
 }

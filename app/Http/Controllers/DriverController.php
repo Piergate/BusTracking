@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Bus;
 use App\Role;
+use App\User;
 use Illuminate\Http\Request;
 
 class DriverController extends Controller
@@ -31,12 +32,34 @@ class DriverController extends Controller
         ]);
 
         $bus = Bus::find($request->bus);
+        
+        $role = Role::find(2);
 
-        Driver::create([
-            'name' => $request->name,
-            'bus' => $bus->id
+        $driver = new User();
+
+        $driver->name = $request->name;
+        $driver->phone =  $request->phone;
+        $driver->password = bcrypt($request->password);
+
+        if (isset($bus)) 
+        {
+            $driver->associate($bus);
+        }
+
+        $driver->save();
+
+        $driver->attachRole($role);
+
+         $notification = [
+            'type' => 'success',
+            'message' => 'Driver is added successfully!',
+            'title' => 'Created'
+        ];
+
+        return Redirect::to('/drivers')->with([
+            'type' => $notification['type'],
+            'title' => $notification['title'],
+            'message' => $notification['message']
         ]);
-
-        return back();
     }
 }
