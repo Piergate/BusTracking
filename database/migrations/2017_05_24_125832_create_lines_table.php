@@ -1,4 +1,4 @@
-<?php
+\<?php
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,8 +16,12 @@ class CreateLinesTable extends Migration
         Schema::create('lines', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('fromRoute');
-            $table->string('toRoute');
+            $table->string('latFromRoute');
+            $table->string('lngFromRoute');
+            $table->string('latToRoute');
+            $table->string('lngToRoute');
+            $table->string('addressFrom');
+            $table->string('addressTo');
             $table->text('notes')->nullable();
             $table->timestamps();
         });

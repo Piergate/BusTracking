@@ -21,6 +21,6 @@ class Line extends Model
 
     public function trips()
     {
-        return $this->hasMany(Trip::class);
+        return $this->hasManyThrough(Trip::class, Bus::class);
     }
 }
