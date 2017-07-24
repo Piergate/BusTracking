@@ -15,11 +15,9 @@ class CreateTripsTable extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('line_id')->index();
             $table->unsignedInteger('bus_id')->index();
             $table->boolean('ended')->default(false);
             $table->timestamps();
-            $table->foreign('line_id')->references('id')->on('lines')->onDelete('cascade');
             $table->foreign('bus_id')->references('id')->on('buses')->onDelete('cascade');
         });
     }

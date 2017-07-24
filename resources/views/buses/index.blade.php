@@ -7,7 +7,7 @@
 		</div>
 		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 			@if(Entrust::hasRole('Admin'))	
-				<a href="{{ url('/buses/create') }}" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> Create new bus</a>
+			<a href="{{ url('/buses/create') }}" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> Create new bus</a>
 			@endif
 		</div>
 	</div>
@@ -20,6 +20,7 @@
 					<th>License</th>
 					<th>Capacity</th>
 					<th>Notes</th>
+					<th>complete</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -32,8 +33,16 @@
 					<td>{{ $bus->capacity }}</td>
 					<td>{{ $bus->notes }}</td>
 					<td>
+						@if($bus->isComplete())
+						<span class="badge" style="background-color: red;">Complete</span>
+						@else
+						<span class="badge" style="background-color: green;">Not complete</span>
+						@endif
+						students: {{ $bus->students_count }} 
+						| supervisors: {{ $bus->supervisors_count }}
+					</td>
+					<td>
 						<a class="btn btn-info" href="{{ url('/buses/'.$bus->id) }}"><i class="fa fa-bus"></i> view</a>
-					
 						<a class="btn btn-default" href="{{ url('/buses/'.$bus->id.'/edit') }}"><i class="fa fa-edit"></i> edit</a>
 						<form action="{{ url('/buses/'.$bus->id) }}" method="POST" style="float: right;">
 							{{ csrf_field() }}
@@ -48,7 +57,6 @@
 	</div>
 </div>
 @endsection
-
 @push('js')
 <script>
 	$(document).ready(function () {

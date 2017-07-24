@@ -18,6 +18,8 @@ class CreateWaypointsTable extends Migration
             $table->unsignedInteger('line_id')->index();
             $table->string('longitude');
             $table->string('latitude');
+            $table->string('address');
+            $table->integer('stationNum');
             $table->timestamps();
             $table->foreign('line_id')->references('id')->on('lines')->onDelete('cascade');
         });

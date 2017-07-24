@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Line;
+use App\Waypoint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -16,7 +17,7 @@ class LineController extends Controller
     public function index()
     {
         //
-        $lines = Line::all();
+        $lines = Line::latest()->get();
         return view('lines.index', compact('lines'));
     }
 
@@ -42,14 +43,18 @@ class LineController extends Controller
         //
         $this->validate($request, [
             'name' => 'required|max:191',
-            'fromRoute' => 'required|max:191',
-            'toRoute' => 'required|max:191'
+            'origin-input' => 'required|max:191',
+            'destination-input' => 'required|max:191'
         ]);
 
         Line::create([
             'name' => $request->name,
-            'fromRoute' => $request->fromRoute,
-            'toRoute' => $request->toRoute,
+            'latFromRoute' => $request->latFromRoute,
+            'lngFromRoute' => $request->lngFromRoute,
+            'latToRoute' => $request->latToRoute,
+            'lngToRoute' => $request->lngToRoute,
+            'addressFrom' => $request->addressFrom,
+            'addressTo' => $request->addressTo,
             'notes' => $request->notes
         ]);
 
@@ -75,6 +80,7 @@ class LineController extends Controller
     public function show(Line $line)
     {
         // load buses
+        // return $line->load('waypoints');
         return view('lines.show', compact('line'));
     }
 
@@ -99,19 +105,42 @@ class LineController extends Controller
      */
     public function update(Request $request, Line $line)
     {
+        // return $request->all();
         //
          $this->validate($request, [
             'name' => 'required|max:191',
-            'fromRoute' => 'required|max:191',
-            'toRoute' => 'required|max:191'
+            'addressFrom' => 'required|max:191',
+            'addressTo' => 'required|max:191'
         ]);
 
         $line->update([
             'name' => $request->name,
-            'fromRoute' => $request->fromRoute,
-            'toRoute' => $request->toRoute,
+            'latFromRoute' => $request->latFromRoute,
+            'lngFromRoute' => $request->lngFromRoute,
+            'latToRoute' => $request->latToRoute,
+            'lngToRoute' => $request->lngToRoute,
+            'addressFrom' => $request->addressFrom,
+            'addressTo' => $request->addressTo,
             'notes' => $request->notes
         ]);
+
+        if (isset($request->addresses)) 
+        {
+            $i = 0;
+            foreach ($request->addresses as $address) 
+            {
+                Waypoint::create([
+                    'line_id' => $line->id,
+                    'address' => $address,
+                    'latitude' => $request->stationlats[$i],
+                    'longitude' => $request->stationlngs[$i],
+                    'stationNum' => $i
+                ]);
+
+                $i ++;
+            }
+        }
+
 
         $notification = [
             'type' => 'success',
@@ -119,7 +148,7 @@ class LineController extends Controller
             'title' => 'Updated'
         ];
 
-        return Redirect::to('/lines/'.$line->id)->with([
+        return Redirect::to('lines/'.$line->id)->with([
             'type' => $notification['type'],
             'title' => $notification['title'],
             'message' => $notification['message']
