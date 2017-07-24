@@ -1,5 +1,6 @@
 <?php
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +15,7 @@
 
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
 
 Auth::routes();
@@ -32,7 +33,39 @@ Route::group(['middleware' => ['web','auth','role:Admin']], function (){
 	Route::resource('/drivers', 'DriverController');
 	Route::resource('/students', 'StudentController');
 	Route::resource('/supervisors', 'SupervisorController');
-	Route::resource('/trips', 'TripController');
+	Route::resource('/trips', 'TripController'); 
+	Route::resource('/manageusers', 'AdminManageUsersController'); 
+});
+
+Route::group(['middleware' => ['web','auth','role:Driver']], function (){
+	Route::get('/startTrip',function()
+	{
+		return view('drivers.position');
+	});
+	Route::post('/save_position',function (Request $request)
+	{
+
+			$last_position = Auth::user()->distinations()->latest()->take(1)->first();
+			if (isset($last_position)) {
+				if ($last_position->latitude == Input::get('latitude') && $last_position->longitude ==  Input::get('longitude'))
+				{
+					$last_position->update(['updated_at'=>new DateTime()]);
+				}
+			}
+			else
+			{
+				$position = Auth::user()->distinations()->create(
+					$request->only('latitude', 'longitude')
+					);
+			}
+
+			return $last_position;
+	});
+	Route::get('/endTrip',function()
+	{
+		return view('home');
+	});
+
 });
 
 Route::get('/locatemybus','LocationController@locateMyBus');

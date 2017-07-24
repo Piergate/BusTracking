@@ -36,9 +36,9 @@ class User extends Authenticatable
         });
     }
 
-    public function destinations()
+    public function distinations()
     {
-        return $this->hasMany(Destination::class);
+        return $this->hasMany(Distination::class);
     }
 
     public function bus()
