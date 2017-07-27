@@ -21,21 +21,28 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/map', function ()
-{
-	return view('testgmaps');
-});
 
 Route::group(['middleware' => ['web','auth','role:Admin']], function (){ 
 
 	Route::resource('/lines', 'LineController');
+	Route::get('exportLine/{type}', 'LineController@downloadExcel');
 	Route::resource('/buses', 'BusController');
 	Route::resource('/drivers', 'DriverController');
 	Route::resource('/students', 'StudentController');
 	Route::resource('/supervisors', 'SupervisorController');
 	Route::resource('/trips', 'TripController'); 
-	Route::resource('/manageusers', 'AdminManageUsersController'); 
+	Route::resource('/manageusers', 'AdminManageUsersController');
+	
 });
+
+Route::group(['middleware' => ['web','auth','role:Admin|Supervisor']], function (){ 
+	// laravel Excel
+	Route::get('natege', 'NategaController@Natega');
+	Route::get('downloadExcel/{type}', 'NategaController@downloadExcel');
+	Route::post('importExcel', 'NategaController@importExcel');
+
+});
+
 
 Route::group(['middleware' => ['web','auth','role:Driver']], function (){
 	Route::get('/startTrip',function()
@@ -45,21 +52,21 @@ Route::group(['middleware' => ['web','auth','role:Driver']], function (){
 	Route::post('/save_position',function (Request $request)
 	{
 
-			$last_position = Auth::user()->distinations()->latest()->take(1)->first();
-			if (isset($last_position)) {
-				if ($last_position->latitude == Input::get('latitude') && $last_position->longitude ==  Input::get('longitude'))
-				{
-					$last_position->update(['updated_at'=>new DateTime()]);
-				}
-			}
-			else
+		$last_position = Auth::user()->distinations()->latest()->take(1)->first();
+		if (isset($last_position)) {
+			if ($last_position->latitude == Input::get('latitude') && $last_position->longitude ==  Input::get('longitude'))
 			{
-				$position = Auth::user()->distinations()->create(
-					$request->only('latitude', 'longitude')
-					);
+				$last_position->update(['updated_at'=>new DateTime()]);
 			}
+		}
+		else
+		{
+			$position = Auth::user()->distinations()->create(
+				$request->only('latitude', 'longitude')
+				);
+		}
 
-			return $last_position;
+		return $last_position;
 	});
 	Route::get('/endTrip',function()
 	{
@@ -74,4 +81,14 @@ Route::get('/locatemybus','LocationController@locateMyBus');
 // 	Route::get('/locatemybus', 'LocationController@locateMyBus');
 // 	Route::resource('/lines', 'LineController', ['only' => ['index']]);
 
+// });
+
+// Route::get('/map', function ()
+// {
+// 	return view('testgmaps');
+// });
+
+// Route::get('testnatege', function(){
+
+// return \Excel::load(storage_path('app/').'testnatega.xlsx')->get();
 // });

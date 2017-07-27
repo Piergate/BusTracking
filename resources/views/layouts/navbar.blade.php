@@ -28,6 +28,9 @@
                 <li><a href="{{ url('/supervisors') }}"><i class="fa fa-user-circle-o"></i> Supervisors</a></li>
                 <li><a href="{{ url('/students') }}"><i class="fa fa-users"></i> Students</a></li>
                 @endif
+                @if(Entrust::hasRole('Admin' || 'Supervisor'))
+                <li><a href="{{ url('/natege') }}"><i class="fa fa-mortar-board"></i> Add Natega </a></li>
+                @endif
                 @if(Entrust::hasRole('Student'))
                 <li><a href="{{ url('/locatemybus') }}"><i class="fa fa-map-marker"></i> Locate my bus</a></li>
                 @endif
