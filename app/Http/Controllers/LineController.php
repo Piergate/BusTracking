@@ -24,6 +24,7 @@ class LineController extends Controller
 
     public function downloadExcel($type)
     {
+
         $data = Line::get()->toArray();
         return Excel::create('Line', function($excel) use ($data) {
             $excel->sheet('Line Sheet', function($sheet) use ($data)

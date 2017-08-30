@@ -16,8 +16,8 @@
 		</div>
 		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 			<h4>Download Data From DataBase</h4>
-			<a href="{{ url('downloadExcel/xls') }}"><button class="btn btn-info">Download Natega xls</button></a>
 			<a href="{{ url('downloadExcel/xlsx') }}"><button class="btn btn-default">Download Natega xlsx</button></a>
+			<a href="{{ url('downloadExcel/xls') }}"><button class="btn btn-info">Download Natega xls</button></a>
 			<br> <br>	
 			<a href="{{ url('downloadExcel/csv') }}"><button class="btn btn-primary">Download CSV</button></a>
 		</div>

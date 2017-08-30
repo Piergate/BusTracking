@@ -66,11 +66,11 @@
 
         var originAutocomplete = new google.maps.places.Autocomplete(
             originInput, {
-                placeIdOnly: true
+                // placeIdOnly: true
             });
         var destinationAutocomplete = new google.maps.places.Autocomplete(
             destinationInput, {
-                placeIdOnly: true
+                // placeIdOnly: true
             });
         this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
         this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
@@ -80,23 +80,24 @@
         autocomplete.bindTo('bounds', this.map);
         autocomplete.addListener('place_changed', function() {
             var place = autocomplete.getPlace();
+            // console.log(place.geometry.location );
             if (!place.place_id) {
                 window.alert("Please select an option from the dropdown list.");
                 return;
             }
             if (mode === 'ORIG') {
                 me.originPlaceId = place.place_id;
-document.getElementById("latFromRoute").value = place.geometry.location.lat(); //latitude From
-document.getElementById("lngFromRoute").value = place.geometry.location.lng(); //longitude From
-document.getElementById("addressFrom").value = place.formatted_address; //address From
-} else {
-    me.destinationPlaceId = place.place_id;
-document.getElementById("latToRoute").value = place.geometry.location.lat(); //latitude To
-document.getElementById("lngToRoute").value = place.geometry.location.lng(); //longitude To
-document.getElementById("addressTo").value = place.formatted_address; //address To
-}
-me.route();
-});
+                document.getElementById("latFromRoute").value = place.geometry.location.lat(); //latitude From
+                document.getElementById("lngFromRoute").value = place.geometry.location.lng(); //longitude From
+                document.getElementById("addressFrom").value = place.formatted_address; //address From
+            } else {
+                me.destinationPlaceId = place.place_id;
+            document.getElementById("latToRoute").value = place.geometry.location.lat(); //latitude To
+            document.getElementById("lngToRoute").value = place.geometry.location.lng(); //longitude To
+            document.getElementById("addressTo").value = place.formatted_address; //address To
+            }
+            me.route();
+            });
     };
     AutocompleteDirectionsHandler.prototype.route = function() {
         if (!this.originPlaceId || !this.destinationPlaceId) {

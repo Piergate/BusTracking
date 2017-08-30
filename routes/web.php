@@ -70,7 +70,8 @@ Route::group(['middleware' => ['web','auth','role:Driver']], function (){
 	});
 	Route::get('/endTrip',function()
 	{
-		return view('home');
+		$tripUser = Auth::user()->distinations()->get();
+		return view('testTrip',compact('tripUser'));
 	});
 
 });

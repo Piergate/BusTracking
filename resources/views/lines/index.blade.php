@@ -7,7 +7,6 @@
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             @if(Entrust::hasRole('Admin'))
             <a href="{{ url('exportLine/xlsx') }}" class="btn btn-success">Download Lines .xlsx</a>
-            <a href="{{ url('exportLine/pdf') }}" class="btn btn-success">Download Lines .pdf</a>
             <a href="{{ url('/lines/create') }}" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> Create new line</a>
             @endif
         </div>
@@ -49,13 +48,7 @@
 <script>
     $(document).ready(function() {
         $('#lines-table').DataTable({
-            "ordering": false,
-            dom: 'Bfrtip',
-            buttons: [
-            {
-            text: '.PDF'
-        },
-        ]
+            "ordering": false
     });
     });
 </script>
