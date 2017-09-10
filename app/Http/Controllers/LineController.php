@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Excel;
 use App\Line;
 use App\Waypoint;
 use Illuminate\Http\Request;
@@ -19,6 +20,18 @@ class LineController extends Controller
         //
         $lines = Line::latest()->get();
         return view('lines.index', compact('lines'));
+    }
+
+    public function downloadExcel($type)
+    {
+
+        $data = Line::get()->toArray();
+        return Excel::create('Line', function($excel) use ($data) {
+            $excel->sheet('Line Sheet', function($sheet) use ($data)
+            {
+                $sheet->fromArray($data);
+            });
+        })->download($type);
     }
 
     /**

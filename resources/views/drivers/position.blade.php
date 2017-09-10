@@ -37,7 +37,7 @@
                 setInterval(function() {
                     $.ajax({
                         type: "POST",
-                        url: "/save_position",
+                        url: "{{ url('/save_position') }}",
                         cache: false,
                         headers: {
                             'X-CSRF-Token': '{{ csrf_token() }}'

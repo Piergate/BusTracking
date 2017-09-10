@@ -6,7 +6,9 @@
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             @if(Entrust::hasRole('Admin'))
-            <a href="{{ url('/lines/create') }}" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> Create new line</a> @endif
+            <a href="{{ url('exportLine/xlsx') }}" class="btn btn-success">Download Lines .xlsx</a>
+            <a href="{{ url('/lines/create') }}" class="btn btn-primary pull-right"><i class="fa fa-plus-circle"></i> Create new line</a>
+            @endif
         </div>
     </div>
     <div class="row">
@@ -42,11 +44,12 @@
     </div>
 </div>
 @endsection @push('js')
+<script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('#lines-table').DataTable({
-    	"ordering": false
+    $(document).ready(function() {
+        $('#lines-table').DataTable({
+            "ordering": false
     });
-});
+    });
 </script>
 @endpush

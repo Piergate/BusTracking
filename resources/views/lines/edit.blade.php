@@ -61,7 +61,7 @@
 <script>
 	function initMap() {
 		var map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 4,
+			zoom: 5,
 			center: {
 				lat: 30.8688,
 				lng: 31.2195
@@ -94,6 +94,7 @@
 					draggable: true,
 					position: results[0].geometry.location
 				});
+				// console.log(results[0]);
 				document.getElementById('station').innerHTML += "<input type='hidden' name='addresses[]' value="  + results[0].formatted_address +" >";						
 				document.getElementById("station").innerHTML += "<input type='hidden' name='stationlats[]' value=" + results[0].geometry.location.lat()+" >";
 				document.getElementById("station").innerHTML += "<input type='hidden' name='stationlngs[]' value=" + results[0].geometry.location.lng()+" >";
@@ -103,27 +104,26 @@
 			}
 		});
 	}
-	function displayRoute(service, display) {
-		var latFromRoute = eval(document.getElementById('latFromRoute').value.replace(/"/g, ""));
-		var lngFromRoute = eval(document.getElementById('lngFromRoute').value.replace(/"/g, ""));
-		var latToRoute = eval(document.getElementById('latToRoute').value.replace(/"/g, ""));
-		var lngToRoute = eval(document.getElementById('lngToRoute').value.replace(/"/g, ""));
-		service.route({
-			origin: {
-				lat: latFromRoute,
-				lng: lngFromRoute
-			},
-			destination: {
-				lat: latToRoute,
-				lng: lngToRoute
-			},
-			travelMode: 'DRIVING',
-			avoidTolls: true
+	function displayRoute(directionsService, directionsDisplay) {
+		var start =  new google.maps.LatLng({{ $line->latFromRoute }}, {{ $line->lngFromRoute }});
+		var end =  new google.maps.LatLng({{ $line->latToRoute }}, {{ $line->lngToRoute }});
+		var waypts = [];
+		waypts.push(
+			@foreach($line->waypoints as $waypoint)
+			{location: new google.maps.LatLng( {{ $waypoint->latitude }}, {{ $waypoint->longitude }} ) },
+			@endforeach
+			);
+		directionsService.route({
+			origin: {location: start},
+			destination: {location: end},
+			waypoints: waypts,
+			optimizeWaypoints: true,
+			travelMode: 'DRIVING'
 		}, function(response, status) {
 			if (status === 'OK') {
-				display.setDirections(response);
+				directionsDisplay.setDirections(response);
 			} else {
-				alert('Could not display directions due to: ' + status);
+				window.alert('Directions request failed due to ' + status);
 			}
 		});
 	}

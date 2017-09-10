@@ -16,7 +16,7 @@ class BusController extends Controller
      */
     public function index()
     {
-        //
+        //latest()->get();
         $buses = Bus::all();
 
         return view('buses.index', compact('buses'));
