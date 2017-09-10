@@ -21,7 +21,7 @@
 <body>
     @include('layouts.navbar')
     <div class="container-fluid" id="app" style="padding-top: 65px;">
-        <h3>Bus system locator</h3>
+        <h3>Bus system locator ....</h3>
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
