@@ -47,34 +47,35 @@ Route::group(['middleware' => ['web','auth','role:Admin|Supervisor']], function 
 
 
 Route::group(['middleware' => ['web','auth','role:Driver']], function (){
-	Route::get('/startTrip',function()
-	{
+
+	Route::get('/startTrip',function(){
 		return view('drivers.position');
 	});
-	Route::post('/save_position',function (Request $request)
-	{
+	Route::post('/save_position',function (Request $request){
 
-		$last_position = Auth::user()->distinations()->latest()->take(1)->first();
-		if (isset($last_position)) {
-			if ($last_position->latitude == Input::get('latitude') && $last_position->longitude ==  Input::get('longitude'))
-			{
-				$last_position->update(['updated_at'=>new DateTime()]);
-		$last_position = Auth::user()->distinations()->latest()->take(1)->first();
-		if (isset($last_position)) {
-			if ($last_position->latitude == Input::get('latitude') && $last_position->longitude ==  Input::get('longitude'))
-			{
-				$last_position->update(['updated_at' => Carbon::now()]);
+		// $last_position = Auth::user()->distinations()->latest()->take(1)->first();
+		// if (isset($last_position)) {
+		// 	if ($last_position->latitude == Input::get('latitude') && $last_position->longitude ==  Input::get('longitude'))
+		// 	{
+		// 		$last_position->update(['updated_at'=>new DateTime()]);
+		// 		$last_position = Auth::user()->distinations()->latest()->take(1)->first();
+		// 	}
 
-			}
-		}
-		else
-		{
-			$position = Auth::user()->distinations()->create(
-				$request->only('latitude', 'longitude')
-			);
-		}
+		// 		if (isset($last_position)) {
+		// 			if ($last_position->latitude == Input::get('latitude') && $last_position->longitude ==  Input::get('longitude'))
+		// 			{
+		// 				$last_position->update(['updated_at' => Carbon::now()]);
 
-		return $last_position;
+		// 			}
+		// 		}
+		// 		else
+		// 		{
+		// 			$position = Auth::user()->distinations()->create(
+		// 				$request->only('latitude', 'longitude')
+		// 				);
+		// 		}
+
+		// 		return $last_position;
 	});
 	Route::get('/endTrip',function()
 	{
