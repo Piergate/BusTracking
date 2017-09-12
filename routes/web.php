@@ -3,7 +3,6 @@
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 // use Input;
-use Auth;
 use Illuminate\Support\Facades\Input;
 
 /*
