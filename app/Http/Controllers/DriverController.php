@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bus;
 use App\Role;
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class DriverController extends Controller
