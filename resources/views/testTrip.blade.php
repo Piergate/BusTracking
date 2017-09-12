@@ -10,36 +10,65 @@
 @endsection
 @push('js')
 <script>
-	var locations = [
-	@foreach($tripUser as $user)
-	['', {{ $user->latitude }}, {{ $user->longitude }}, 4],
-	@if ($loop->last) 
-	['', {{ $user->latitude }}, {{ $user->longitude }}, 4]
-	@endif
-	@endforeach
-	];
+	
 	function initMap() {
-		map = new google.maps.Map(document.getElementById('map'), {
-			center: {lat: 30.0443100, lng: 31.235717300000400},
-			zoom: 9,
+		var directionsService = new google.maps.DirectionsService;
+		var directionsDisplay = new google.maps.DirectionsRenderer;
+		var map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 5,
+			center: {
+				lat: 30.8688,
+                lng: 31.2195
+			}
 		});
-		getPosition();
+		directionsDisplay.setMap(map);
+		calculateAndDisplayRoute(directionsService, directionsDisplay);
 	}
-function getPosition() {
-	var marker, i;
-	for (i = 0; i < locations.length; i++) {  
-		var marker = new google.maps.Marker({
-			position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-			map: map
-		});
-		google.maps.event.addListener(marker, 'click', (function(marker, i) {
-		}) (marker, i));
-	}
-}
+	/**
+	 *   displayRoute
+	 */
+	 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+	 	@foreach($tripUser as $usertrip)
+	 	@if($loop->first)
+	 	var start =  new google.maps.LatLng({{ $usertrip->latitude }}, {{ $usertrip->longitude }});
+	 	@endif
+	 	@if($loop->last)
+	 	var end =  new google.maps.LatLng({{ $usertrip->latitude }}, {{ $usertrip->longitude }});
+	 	@endif
+	 	@endforeach
+	 	var waypts = [];
+	 	waypts.push(
+	 		@foreach($tripUser as $usertrip)
+	 		@if(!$loop->first)
+	 		@if(!$loop->last)
+	 		{location: new google.maps.LatLng( {{ $usertrip->latitude }}, {{ $usertrip->longitude }} ) },
+	 		@endif
+	 		@endif
+	 		@endforeach
+	 		);
+	 	directionsService.route({
+	 		origin: {location: start},
+	 		destination: {location: end},
+	 		waypoints: waypts,
+	 		optimizeWaypoints: true,
+	 		travelMode: 'DRIVING'
+	 	}, function(response, status) {
+	 		if (status === 'OK') {
+	 			directionsDisplay.setDirections(response);
+	 		} else {
+	 			window.alert('Directions request failed due to ' + status);
+	 		}
+	 	});
+	 }
+
+/**
+ *   end displayRoute
+ */
+
 </script>
 @endpush
 @push('googleScript')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="https://maps.google.com/maps/api/js?key=AIzaSyCz1s7xqwM6CsqESjN3hQNwLbiB017vOcI&callback=initMap" async defer></script>
+<script async defer src="https://maps.google.com/maps/api/js?key=AIzaSyCz1s7xqwM6CsqESjN3hQNwLbiB017vOcI&callback=initMap"></script>
 
 @endpush

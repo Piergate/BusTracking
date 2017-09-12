@@ -2,6 +2,8 @@
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+// use Input;
+use Auth;
 use Illuminate\Support\Facades\Input;
 /*
 |--------------------------------------------------------------------------
@@ -49,37 +51,30 @@ Route::group(['middleware' => ['web','auth','role:Admin|Supervisor']], function 
 Route::group(['middleware' => ['web','auth','role:Driver']], function (){
 
 	Route::get('/startTrip',function(){
-		return view('drivers.position');
+		return view('drivers.position', compact('last_position'));
 	});
+
 	Route::post('/save_position',function (Request $request){
+		$last_position = Auth::user()->distinations()->latest()->take(1)->first();
+		if (isset($last_position)) {
+			if ($last_position->latitude == Input::get('latitude') && $last_position->longitude ==  Input::get('longitude'))
+			{
+				$last_position->update(['updated_at' => Carbon::now()]);
 
-		// $last_position = Auth::user()->distinations()->latest()->take(1)->first();
-		// if (isset($last_position)) {
-		// 	if ($last_position->latitude == Input::get('latitude') && $last_position->longitude ==  Input::get('longitude'))
-		// 	{
-		// 		$last_position->update(['updated_at'=>new DateTime()]);
-		// 		$last_position = Auth::user()->distinations()->latest()->take(1)->first();
-		// 	}
+			}
+		}
+		else
+		{
+			$position = Auth::user()->distinations()->create(
+				$request->only('latitude', 'longitude')
+				);
+		}
 
-		// 		if (isset($last_position)) {
-		// 			if ($last_position->latitude == Input::get('latitude') && $last_position->longitude ==  Input::get('longitude'))
-		// 			{
-		// 				$last_position->update(['updated_at' => Carbon::now()]);
-
-		// 			}
-		// 		}
-		// 		else
-		// 		{
-		// 			$position = Auth::user()->distinations()->create(
-		// 				$request->only('latitude', 'longitude')
-		// 				);
-		// 		}
-
-		// 		return $last_position;
 	});
 	Route::get('/endTrip',function()
 	{
 		$tripUser = Auth::user()->distinations()->get();
+		
 		return view('testTrip',compact('tripUser'));
 	});
 
