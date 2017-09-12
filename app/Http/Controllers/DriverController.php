@@ -6,6 +6,7 @@ use App\Bus;
 use App\Role;
 use App\User;
 use Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 
 class DriverController extends Controller
